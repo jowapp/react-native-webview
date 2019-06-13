@@ -67,11 +67,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.HttpCookie;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -434,7 +436,24 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
             }
           }
         }
-        view.loadUrl(url, headerMap);
+
+        if (source.hasKey("cookies")) {
+          ReadableArray cookies = source.getArray("cookies");
+          CookieManager cookieManager = CookieManager.getInstance();
+          cookieManager.setAcceptCookie(true);
+          cookieManager.removeAllCookie();
+
+          if (cookies != null && cookies.size() > 0) {
+            for (int i = 0; i < cookies.size(); i++) {
+              String cookie = cookies.getString(i);
+              if (cookie != null) {
+                cookieManager.setCookie(url, cookie);
+              }
+            }
+          }
+        }
+
+        view.loadUrl(url, null);
         return;
       }
     }
