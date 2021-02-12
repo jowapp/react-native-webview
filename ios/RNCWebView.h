@@ -50,6 +50,7 @@
 @property (nonatomic, assign) BOOL showsHorizontalScrollIndicator;
 @property (nonatomic, assign) BOOL showsVerticalScrollIndicator;
 @property (nonatomic, assign) BOOL directionalLockEnabled;
+@property (nonatomic, assign) BOOL navigationPolicyAllowWithoutTryingAppLink;
 @property (nonatomic, copy) NSString *allowingReadAccessToURL;
 
 + (void)setClientAuthenticationCredential:(nullable NSURLCredential*)credential;

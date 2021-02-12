@@ -67,6 +67,7 @@ static NSURLCredential* clientAuthenticationCredential;
     _automaticallyAdjustContentInsets = YES;
     _contentInset = UIEdgeInsetsZero;
     _savedKeyboardDisplayRequiresUserAction = YES;
+    _navigationPolicyAllowWithoutTryingAppLink = NO;
     _savedStatusBarStyle = RCTSharedApplication().statusBarStyle;
     _savedStatusBarHidden = RCTSharedApplication().statusBarHidden;
 
@@ -855,8 +856,12 @@ static NSURLCredential* clientAuthenticationCredential;
     }
   }
 
-  // Allow all navigation by default
-  decisionHandler(WKNavigationResponsePolicyAllow);
+  if (_navigationPolicyAllowWithoutTryingAppLink) {
+    decisionHandler((WKNavigationActionPolicy)(WKNavigationActionPolicyAllow + 2));
+  } else {
+    // Allow all navigation by default
+    decisionHandler(WKNavigationResponsePolicyAllow);
+  }
 }
 
 /**

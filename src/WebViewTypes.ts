@@ -269,6 +269,7 @@ export interface IOSNativeWebViewProps extends CommonNativeWebViewProps {
   pagingEnabled?: boolean;
   scrollEnabled?: boolean;
   useSharedProcessPool?: boolean;
+  navigationPolicyAllowWithoutTryingAppLink?: boolean;
 }
 
 export interface IOSWebViewProps extends WebViewSharedProps {
