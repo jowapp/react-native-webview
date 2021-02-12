@@ -614,6 +614,11 @@ static NSURLCredential* clientAuthenticationCredential;
   _webView.scrollView.scrollEnabled = scrollEnabled;
 }
 
+- (void)setNavigationPolicyAllowWithoutTryingAppLink:(BOOL)navigationPolicyAllowWithoutTryingAppLink
+{
+  _navigationPolicyAllowWithoutTryingAppLink = navigationPolicyAllowWithoutTryingAppLink;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
   // Don't allow scrolling the scrollView.
