@@ -843,7 +843,14 @@ static NSURLCredential* clientAuthenticationCredential;
     if (![self.delegate webView:self
       shouldStartLoadForRequest:event
                    withCallback:_onShouldStartLoadWithRequest]) {
-      decisionHandler(WKNavigationResponsePolicyCancel);
+        if(_navigationPolicyAllowWithoutTryingAppLink && ![[[request URL] scheme] hasPrefix:@"http"]) {
+            // Workaround(antoine): strange hack but for deeplinks (non-http(s) links)
+            // WKNavigationResponsePolicyCancel policy will still follow the link and
+            // open the associated app (if any). That's not what we want!
+            decisionHandler((WKNavigationActionPolicy)(WKNavigationActionPolicyAllow + 2));
+        } else {
+            decisionHandler(WKNavigationResponsePolicyCancel);
+        }
       return;
     }
   }
